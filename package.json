@@ -9,7 +9,7 @@
     "deployCommands": "node deployCommands.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Anbarasu",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^13.2.0"
