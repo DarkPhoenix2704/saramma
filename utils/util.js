@@ -1,9 +1,6 @@
 const {MessageActionRow, MessageButton, MessageEmbed} = require("discord.js");
 const discordWeek = require('../data/discordWeek.json')
-const delay = (time) => {
-    setTimeout(() => {
-    }, time);
-};
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
 const awaitMessage = (member, response) => {
     member.user.dmChannel.awaitMessages({
