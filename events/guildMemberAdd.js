@@ -4,7 +4,7 @@ const rating = require('../data/rating.json')
 module.exports = {
     name: 'guildMemberAdd',
     async execute(member) {
-        await member.send({content:'**Welcome..!**'});
+        await member.send({content: '**Welcome..!**'});
         await delay(1000);
         await member.send({content: '**Hooray, you have just landed on TinkerHub Discord Server. Woohoo!!🎉**'});
         await delay(1000);
@@ -50,7 +50,7 @@ module.exports = {
             response: 'Looks like we have everything for you😉',
             id: 'interestedStack',
             awaitFailed: false,
-            max_values:val.length
+            max_values: val.length
         });
         await askChoice(member, {
             message: 'Are you a professional in any of the selected stacks? Rate yourselves in a period of 1 - 5',
@@ -58,7 +58,7 @@ module.exports = {
             placeholder: 'Select the rating',
             response: 'Thanks for your response',
             awaitFailed: false,
-            max_values:1
+            max_values: 1
         });
         await delay(2000);
         await askButton(member, {
