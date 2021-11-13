@@ -1,5 +1,6 @@
-const {MessageActionRow, MessageButton, MessageEmbed} = require("discord.js");
+const {MessageActionRow, MessageButton, MessageEmbed, MessageSelectMenu} = require("discord.js");
 const discordWeek = require('../data/discordWeek.json')
+const stacks = require('../data/stacks.json')
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 const awaitMessage = async (member, response) => {
@@ -61,6 +62,46 @@ const askButton = async (member, bData) => {
         bData.awaitFailed = true;
         await askButton(member, bData);
     });
+};
+
+const askChoice = async (member, cData) => {
+    if (!cData.awaitFailed) {
+        cData.row = new MessageActionRow()
+            .addComponents(
+                new MessageSelectMenu()
+                    .setCustomId('select')
+                    .setPlaceholder(cData.placeholder)
+                    .setMinValues(1)
+                    .setMaxValues(cData.max_values)
+                    .addOptions(cData.choices),
+            );
+        await delay(1000);
+        await member.send({content: cData.message, components: [cData.row]});
+    }
+    await member.user.dmChannel.awaitMessageComponent({
+        filter: (i) => i.user.id === member.id,
+        componentType: 'SELECT_MENU',
+        time: 3000000
+    }).then(async interaction => {
+        if (cData.id === 'interestedStack') {
+            let message = '';
+            interaction.values.map(value => {
+                const selectedStack = stacks.filter(stack => stack.id === value)[0];
+                message = message + `Checkout <#${selectedStack.channel_id}> for more info about ${selectedStack.name}\n`;
+            })
+            await interaction.reply({content: message});
+        }else {
+            await interaction.reply({content: cData.response});
+            return;
+        }
+        await delay(1000);
+        await member.send({content: cData.response});
+    }).catch(async () => {
+        console.log('askChoice Failed : Calling again');
+        cData.awaitFailed = true;
+        await askChoice(member, cData);
+    });
 }
 
-module.exports = {delay, awaitMessage, askButton};
+
+module.exports = {delay, awaitMessage, askButton, askChoice};
