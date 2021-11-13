@@ -1,5 +1,6 @@
-const {delay, awaitMessage, askButton} = require('../utils/util')
-
+const {delay, awaitMessage, askButton, askChoice, askYesOrNo} = require('../utils/util')
+const stacks = require('../data/stacks.json')
+const rating = require('../data/rating.json')
 module.exports = {
     name: 'guildMemberAdd',
     async execute(member) {
@@ -33,6 +34,38 @@ module.exports = {
             buttons: ['Techie', 'Non-Techie'],
             styles: ['SUCCESS', 'DANGER'],
             response: ['Looks like you are one among us…🤩', 'Wanna know more about Tech??'],
+            awaitFailed: false
+        });
+        const val = stacks.map(value => {
+            return {
+                label: value.name,
+                description: `${value.description}`,
+                value: `${value.id}`
+            }
+        });
+        await askChoice(member, {
+            message: 'So what are the stacks that you wish to study or develop?',
+            choices: val,
+            placeholder: 'Select the interested stack',
+            response: 'Looks like we have everything for you😉',
+            id: 'interestedStack',
+            awaitFailed: false,
+            max_values:val.length
+        });
+        await askChoice(member, {
+            message: 'Are you a professional in any of the selected stacks? Rate yourselves in a period of 1 - 5',
+            choices: rating,
+            placeholder: 'Select the rating',
+            response: 'Thanks for your response',
+            awaitFailed: false,
+            max_values:1
+        });
+        await delay(2000);
+        await askButton(member, {
+            message: 'Do you want to be inspired through wonderful sessions by experienced mentors…',
+            buttons: ['Yepp', 'No'],
+            styles: ['SUCCESS', 'DANGER'],
+            response: ['Great!😃', 'Ohh!😢'],
             awaitFailed: false
         });
     }
