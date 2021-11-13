@@ -1,0 +1,27 @@
+[
+  {
+    "value": "1",
+    "label": "1",
+    "description": "Noobie"
+  },
+  {
+    "value": "2",
+    "label": "2",
+    "description": "Mediocre"
+  },
+  {
+    "value": "3",
+    "label": "3",
+    "description": "Amateur"
+  },
+  {
+    "value": "4",
+    "label": "4",
+    "description": "Veteran"
+  },
+  {
+    "value": "5",
+    "label": "5",
+    "description": "Professional"
+  }
+]

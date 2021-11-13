@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "name": "AI & ML",
+    "description": "Asks your doubts about AI here",
+    "channel_id": 776800686741520424
+  },
+  {
+    "id": "2",
+    "name": "Flutter",
+    "description": "Future of app development is flutter! Believe me",
+    "channel_id": 769422754071838721
+  },
+  {
+    "id": "3",
+    "name": "Web Technology",
+    "description": "Web based technologies here",
+    "channel_id": 771454303520161842
+  },
+  {
+    "id": "4",
+    "name": "Quantum Computing",
+    "description": "Ask in qBits",
+    "channel_id": 785738859044012102
+  },
+  {
+    "id": "5",
+    "name": "Others",
+    "description": "Couldn\"t find your stack here? Click here!",
+    "channel_id": 735214780901752913
+  }
+]

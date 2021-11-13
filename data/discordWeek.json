@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Monday - Learning Bytes",
+    "value": "Getting started with the basics of simple tech topics to explore with a weekly assignment",
+    "inline": false
+  },
+  {
+    "name": "Tuesday - I^2 Talks",
+    "value": "To know about the plethora of project options available to enhance your skill sets",
+    "inline": false
+  },
+  {
+    "name": "Wednesday - Campus Connect",
+    "value": " Experience sharing of each campus community in a fun-filled manner",
+    "inline": false
+  },
+  {
+    "name": "Thursday - Tech Sora",
+    "value": "Intro to some of the advanced tech topics",
+    "inline": false
+  },
+  {
+    "name": "Friday - Career Hacks",
+    "value": "Insights to build an influential career",
+    "inline": false
+  },
+  {
+    "name": "Saturday - Mega Saturday",
+    "value": "Healthy discussions around some everyday topics",
+    "inline": false
+  },
+  {
+    "name": "Sunday - Sunday Bash",
+    "value": "Fun chilled session to break the ice with interesting games and stuff",
+    "inline": false
+  }
+]
