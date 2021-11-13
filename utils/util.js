@@ -1,8 +1,9 @@
 const {MessageActionRow, MessageButton, MessageEmbed, MessageSelectMenu} = require("discord.js");
-const discordWeek = require('../data/discordWeek.json')
-const stacks = require('../data/stacks.json')
-const tinkerHubEvents = require('../data/tinkerhubEvents.json')
+const discordWeek = require('../data/discordWeek.json');
+const stacks = require('../data/stacks.json');
+const tinkerHubEvents = require('../data/tinkerhubEvents.json');
 const timeOut = 3000000;
+
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 const awaitMessage = async (member, response) => {
@@ -92,7 +93,7 @@ const askChoice = async (member, cData) => {
                 message = message + `Checkout <#${selectedStack.channel_id}> for more info about ${selectedStack.name}\n`;
             })
             await interaction.reply({content: message});
-        }else {
+        } else {
             await interaction.reply({content: cData.response});
             return;
         }
