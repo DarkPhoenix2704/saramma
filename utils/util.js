@@ -2,13 +2,14 @@ const {MessageActionRow, MessageButton, MessageEmbed, MessageSelectMenu} = requi
 const discordWeek = require('../data/discordWeek.json')
 const stacks = require('../data/stacks.json')
 const tinkerHubEvents = require('../data/tinkerhubEvents.json')
+const timeOut = 3000000;
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 const awaitMessage = async (member, response) => {
     await member.user.dmChannel.awaitMessages({
         filter: (message) => message.author.id === member.id,
         max: 1,
-        time: 3000000,
+        time: timeOut,
         errors: 'time'
     }).then(async () => {
         await delay(500);
@@ -37,7 +38,7 @@ const askButton = async (member, bData) => {
     await member.user.dmChannel.awaitMessageComponent({
         filter: (i) => i.user.id === member.id,
         componentType: 'BUTTON',
-        time: 3000000
+        time: timeOut
     }).then(async interaction => {
         bData.row.components[0].setDisabled(true);
         bData.row.components[1].setDisabled(true);
@@ -82,7 +83,7 @@ const askChoice = async (member, cData) => {
     await member.user.dmChannel.awaitMessageComponent({
         filter: (i) => i.user.id === member.id,
         componentType: 'SELECT_MENU',
-        time: 3000000
+        time: timeOut
     }).then(async interaction => {
         if (cData.id === 'interestedStack') {
             let message = '';
@@ -121,7 +122,7 @@ const askYesOrNo = async (member, yData) => {
     member.user.dmChannel.awaitMessageComponent({
         filter: (i) => i.user.id === member.id,
         componentType: 'BUTTON',
-        time: 3000000
+        time: timeOut
     }).then(async interaction => {
         yData.row.components[0].setDisabled(true);
         yData.row.components[1].setDisabled(true);
