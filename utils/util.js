@@ -17,7 +17,7 @@ const awaitMessage = async (member, response) => {
     })
 };
 
-const askButton = (member, bData) => {
+const askButton = async (member, bData) => {
     if (!bData.awaitFailed) {
         bData.row = new MessageActionRow()
             .addComponents(
@@ -30,9 +30,9 @@ const askButton = (member, bData) => {
                     .setLabel(bData.buttons[1])
                     .setStyle(bData.styles[1]),
             );
-        member.send({content: bData.message, components: [bData.row]});
+        await member.send({content: bData.message, components: [bData.row]});
     }
-    member.user.dmChannel.awaitMessageComponent({
+    await member.user.dmChannel.awaitMessageComponent({
         filter: (i) => i.user.id === member.id,
         componentType: 'BUTTON',
         time: 3000000
@@ -54,12 +54,12 @@ const askButton = (member, bData) => {
             }
         } else {
             await interaction.update({components: [bData.row]});
-            member.send(bData.response[1]);
+            await member.send(bData.response[1]);
         }
     }).catch(async () => {
         console.log('askButton Failed : Calling askButton again');
         bData.awaitFailed = true;
-        askButton(member, bData);
+        await askButton(member, bData);
     });
 }
 
