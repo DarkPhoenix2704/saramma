@@ -10,5 +10,12 @@ module.exports = {
         awaitMessage(member, 'Mmmm..Interesting…!');
         delay(1500);
         member.send({content: 'Let’s deep dive into your interests..'});
+        askButton(member, {
+            message: 'So, What do you like?',
+            buttons: ['Netflix', 'Youtube'],
+            styles: ['DANGER', 'DANGER'],
+            response: ['Looks like we are like minded 😄', 'Looks like we are like minded 😄'],
+            awaitFailed: false
+        });
     }
 }
