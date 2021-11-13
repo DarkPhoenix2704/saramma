@@ -18,5 +18,22 @@ module.exports = {
             response: ['Looks like we are like minded 😄', 'Looks like we are like minded 😄'],
             awaitFailed: false
         });
+        await askButton(member, {
+            message: 'Let\'s see what we have more in common',
+            buttons: ['Twitter', 'Facebook'],
+            styles: ['PRIMARY', 'PRIMARY'],
+            response: ['Woooh!😮 Are you reading my mind?', 'Woooh!😮 Are you reading my mind?'],
+            awaitFailed: false
+        });
+        await delay(1000);
+        await member.send({content: 'I wanna know more about you'});
+        await delay(500);
+        await askButton(member, {
+            message: 'What type are you?',
+            buttons: ['Techie', 'Non-Techie'],
+            styles: ['SUCCESS', 'DANGER'],
+            response: ['Looks like you are one among us…🤩', 'Wanna know more about Tech??'],
+            awaitFailed: false
+        });
     }
 }
