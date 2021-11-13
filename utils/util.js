@@ -103,6 +103,50 @@ const askChoice = async (member, cData) => {
         await askChoice(member, cData);
     });
 }
+const askYesOrNo = async (member, yData) => {
+    if (!yData.awaitFailed) {
+        yData.row = new MessageActionRow()
+            .addComponents(
+                new MessageButton()
+                    .setCustomId('yes')
+                    .setLabel('Yass')
+                    .setStyle('SUCCESS'),
+                new MessageButton()
+                    .setCustomId('no')
+                    .setLabel('No')
+                    .setStyle('DANGER')
+            );
+        member.send({content: yData.message, components: [yData.row]});
+    }
+    member.user.dmChannel.awaitMessageComponent({
+        filter: (i) => i.user.id === member.id,
+        componentType: 'BUTTON',
+        time: 3000000
+    }).then(async interaction => {
+        yData.row.components[0].setDisabled(true);
+        yData.row.components[1].setDisabled(true);
+        await delay(750);
+        let res = interaction.customId;
+        await interaction.update({components: [yData.row]});
+        if (res === 'yes') {
+            let row = new MessageActionRow()
+            tinkerHubEvents.map(value => {
+                row.addComponents(
+                    new MessageButton()
+                        .setLabel(value.label)
+                        .setStyle(value.style)
+                        .setURL(value.url)
+                )
+            })
+            member.send({content: 'Click here to know more about our Programs', components: [row]});
+        } else {
+            member.send({content: 'You can check our Instagram page to know about the details later\n https://instagram.com/tinkerhub'});
+        }
+    }).catch(async () => {
+        console.log('askYesOrNo Failed : Calling Again');
+        yData.awaitFailed = true;
+        await askYesOrNo(member, yData);
+    });
+}
 
-
-module.exports = {delay, awaitMessage, askButton, askChoice};
+module.exports = {delay, awaitMessage, askButton, askChoice, askYesOrNo};
