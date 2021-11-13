@@ -68,5 +68,20 @@ module.exports = {
             response: ['Great!😃', 'Ohh!😢'],
             awaitFailed: false
         });
+        await delay(3000);
+        await askYesOrNo(member, {
+            message: 'Do you want to know how you could become a part of our program?',
+            awaitFailed: false
+        });
+        await delay(5000);
+        await member.send({content: 'For any help and doubts you can clear it through the Help channel and if you want any personal assistance feel free to ping'});
+        await delay(500);
+        await member.send({content: 'Ankitha Jazy'});
+        await delay(500);
+        await member.send({content: 'Neha Susan'});
+        await delay(500);
+        await member.send({content: 'Godwin George'});
+        await delay(1000);
+        await member.send({content: 'Happy Learning!😊'});
     }
 }

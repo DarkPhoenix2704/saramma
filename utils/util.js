@@ -1,6 +1,7 @@
 const {MessageActionRow, MessageButton, MessageEmbed, MessageSelectMenu} = require("discord.js");
 const discordWeek = require('../data/discordWeek.json')
 const stacks = require('../data/stacks.json')
+const tinkerHubEvents = require('../data/tinkerhubEvents.json')
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 const awaitMessage = async (member, response) => {
