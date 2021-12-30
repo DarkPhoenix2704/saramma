@@ -1,8 +1,14 @@
-const {MessageActionRow, MessageButton, MessageEmbed, MessageSelectMenu} = require("discord.js");
+const {
+    MessageActionRow,
+    MessageButton,
+    MessageEmbed,
+    MessageSelectMenu
+} = require("discord.js");
+const jsoning = require("jsoning");
 const stacks = require('../data/stacks.json');
 const tinkerHubEvents = require('../data/tinkerhubEvents.json');
 const timeOut = 3000000;
-
+let db;
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 const awaitMessage = async (member, response) => {
@@ -13,27 +19,40 @@ const awaitMessage = async (member, response) => {
         errors: 'time'
     }).then(async () => {
         await delay(500);
-        await member.send({content: response});
+        await member.send({
+            content: response
+        });
     }).catch(async () => {
         console.log('AwaitMessage Failed : Calling awaitMessage() again');
         await awaitMessage(member, response);
     })
 };
 
+
+const getDb = async () => {
+    if (!db) {
+        db = new jsoning("data/db.json");
+    }
+    return db;
+}
+
 const askButton = async (member, bData) => {
     if (!bData.awaitFailed) {
         bData.row = new MessageActionRow()
             .addComponents(
                 new MessageButton()
-                    .setCustomId('yes')
-                    .setLabel(bData.buttons[0])
-                    .setStyle(bData.styles[0]),
+                .setCustomId('yes')
+                .setLabel(bData.buttons[0])
+                .setStyle(bData.styles[0]),
                 new MessageButton()
-                    .setCustomId('no')
-                    .setLabel(bData.buttons[1])
-                    .setStyle(bData.styles[1]),
+                .setCustomId('no')
+                .setLabel(bData.buttons[1])
+                .setStyle(bData.styles[1]),
             );
-        await member.send({content: bData.message, components: [bData.row]});
+        await member.send({
+            content: bData.message,
+            components: [bData.row]
+        });
     }
     await member.user.dmChannel.awaitMessageComponent({
         filter: (i) => i.user.id === member.id,
@@ -44,10 +63,16 @@ const askButton = async (member, bData) => {
         bData.row.components[1].setDisabled(true);
         await delay(750);
         if (interaction.component.customId === 'yes') {
-            member.send({content: bData.response[0]});
-            await interaction.update({components: [bData.row]});
+            member.send({
+                content: bData.response[0]
+            });
+            await interaction.update({
+                components: [bData.row]
+            });
         } else {
-            await interaction.update({components: [bData.row]});
+            await interaction.update({
+                components: [bData.row]
+            });
             await member.send(bData.response[1]);
         }
     }).catch(async () => {
@@ -62,14 +87,17 @@ const askChoice = async (member, cData) => {
         cData.row = new MessageActionRow()
             .addComponents(
                 new MessageSelectMenu()
-                    .setCustomId('select')
-                    .setPlaceholder(cData.placeholder)
-                    .setMinValues(1)
-                    .setMaxValues(cData.max_values)
-                    .addOptions(cData.choices),
+                .setCustomId('select')
+                .setPlaceholder(cData.placeholder)
+                .setMinValues(1)
+                .setMaxValues(cData.max_values)
+                .addOptions(cData.choices),
             );
         await delay(1000);
-        await member.send({content: cData.message, components: [cData.row]});
+        await member.send({
+            content: cData.message,
+            components: [cData.row]
+        });
     }
     await member.user.dmChannel.awaitMessageComponent({
         filter: (i) => i.user.id === member.id,
@@ -82,13 +110,19 @@ const askChoice = async (member, cData) => {
                 const selectedStack = stacks.filter(stack => stack.id === value)[0];
                 message = message + `Checkout <#${selectedStack.channel_id}> for more info about ${selectedStack.name}\n`;
             })
-            await interaction.reply({content: message});
+            await interaction.reply({
+                content: message
+            });
         } else {
-            await interaction.reply({content: cData.response});
+            await interaction.reply({
+                content: cData.response
+            });
             return;
         }
         await delay(1000);
-        await member.send({content: cData.response});
+        await member.send({
+            content: cData.response
+        });
     }).catch(async () => {
         console.log('askChoice Failed : Calling again');
         cData.awaitFailed = true;
@@ -100,15 +134,18 @@ const askYesOrNo = async (member, yData) => {
         yData.row = new MessageActionRow()
             .addComponents(
                 new MessageButton()
-                    .setCustomId('yes')
-                    .setLabel('Yass')
-                    .setStyle('SUCCESS'),
+                .setCustomId('yes')
+                .setLabel('Yass')
+                .setStyle('SUCCESS'),
                 new MessageButton()
-                    .setCustomId('no')
-                    .setLabel('No')
-                    .setStyle('DANGER')
+                .setCustomId('no')
+                .setLabel('No')
+                .setStyle('DANGER')
             );
-        member.send({content: yData.message, components: [yData.row]});
+        member.send({
+            content: yData.message,
+            components: [yData.row]
+        });
     }
     await member.user.dmChannel.awaitMessageComponent({
         filter: (i) => i.user.id === member.id,
@@ -119,20 +156,27 @@ const askYesOrNo = async (member, yData) => {
         yData.row.components[1].setDisabled(true);
         await delay(750);
         let res = interaction.customId;
-        await interaction.update({components: [yData.row]});
+        await interaction.update({
+            components: [yData.row]
+        });
         if (res === 'yes') {
             let row = new MessageActionRow()
             tinkerHubEvents.map(value => {
                 row.addComponents(
                     new MessageButton()
-                        .setLabel(value.label)
-                        .setStyle(value.style)
-                        .setURL(value.url)
+                    .setLabel(value.label)
+                    .setStyle(value.style)
+                    .setURL(value.url)
                 )
             })
-            member.send({content: 'Click here to know more about our Programs', components: [row]});
+            member.send({
+                content: 'Click here to know more about our Programs',
+                components: [row]
+            });
         } else {
-            member.send({content: 'You can check our Instagram page to know about the details later\n https://instagram.com/tinkerhub'});
+            member.send({
+                content: 'You can check our Instagram page to know about the details later\n https://instagram.com/tinkerhub'
+            });
         }
     }).catch(async () => {
         console.log('askYesOrNo Failed : Calling Again');
@@ -141,4 +185,11 @@ const askYesOrNo = async (member, yData) => {
     });
 }
 
-module.exports = {delay, awaitMessage, askButton, askChoice, askYesOrNo};
+module.exports = {
+    delay,
+    awaitMessage,
+    askButton,
+    askChoice,
+    askYesOrNo,
+    getDb
+};
