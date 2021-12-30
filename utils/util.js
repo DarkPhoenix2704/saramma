@@ -110,7 +110,7 @@ const askYesOrNo = async (member, yData) => {
             );
         member.send({content: yData.message, components: [yData.row]});
     }
-    member.user.dmChannel.awaitMessageComponent({
+    await member.user.dmChannel.awaitMessageComponent({
         filter: (i) => i.user.id === member.id,
         componentType: 'BUTTON',
         time: timeOut
