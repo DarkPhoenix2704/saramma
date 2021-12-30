@@ -1,5 +1,4 @@
 const {MessageActionRow, MessageButton, MessageEmbed, MessageSelectMenu} = require("discord.js");
-const discordWeek = require('../data/discordWeek.json');
 const stacks = require('../data/stacks.json');
 const tinkerHubEvents = require('../data/tinkerhubEvents.json');
 const timeOut = 3000000;
@@ -47,15 +46,6 @@ const askButton = async (member, bData) => {
         if (interaction.component.customId === 'yes') {
             member.send({content: bData.response[0]});
             await interaction.update({components: [bData.row]});
-            if (bData.response[0] === 'Great!😃') {
-                const embed = new MessageEmbed()
-                    .setTitle('Discord Week')
-                    .setColor('#fff')
-                    .setDescription('Discord Week is here with amazing sessions on various stacks everyday.  Below are the recurring events in the Discord Week. ')
-                    .addFields(discordWeek);
-                await delay(1000);
-                member.send({embeds: [embed]});
-            }
         } else {
             await interaction.update({components: [bData.row]});
             await member.send(bData.response[1]);

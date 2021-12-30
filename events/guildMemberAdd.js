@@ -60,14 +60,6 @@ module.exports = {
             awaitFailed: false,
             max_values: 1
         });
-        await delay(2000);
-        await askButton(member, {
-            message: 'Do you want to be inspired through wonderful sessions by experienced mentors…',
-            buttons: ['Yepp', 'No'],
-            styles: ['SUCCESS', 'DANGER'],
-            response: ['Great!😃', 'Ohh!😢'],
-            awaitFailed: false
-        });
         await delay(3000);
         await askYesOrNo(member, {
             message: 'Do you want to know how you could become a part of our program?',
