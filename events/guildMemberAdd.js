@@ -106,7 +106,7 @@ module.exports = {
                 content: 'Happy Learning!😊'
             });
         } else {
-            console.log('Welcome message is not enabled');
+            console.log(`${member.user.username} has joined the server`);
         }
     }
 }

@@ -1,6 +1,6 @@
 const {REST} = require('@discordjs/rest');
 const {Routes} = require('discord-api-types/v9');
-const {token, clientId} = require('../saramma/config.json');
+const {token, clientId} = require('./config.json');
 const fs = require('fs');
 
 const commands = [];
