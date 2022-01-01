@@ -4,6 +4,7 @@ const {
 const {
 	getDb
 } = require('../utils/util');
+const { roleName } = require('../config.json');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('enablewelcomemessage')
@@ -19,7 +20,7 @@ module.exports = {
 			});
 			return;
 		}
-		let hasPermission = interaction.member.roles.cache.has(interaction.guild.roles.cache.find(role => role.name === 'ADMINISTRATOR').id);
+		let hasPermission = interaction.member.roles.cache.has(interaction.guild.roles.cache.find(role => role.name === roleName).id);
 		if (hasPermission) {
 			const userChoice = interaction.options.getString('option');
 			console.log(userChoice);
