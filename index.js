@@ -1,9 +1,9 @@
-const {Client, Intents, Collection} = require('discord.js');
+const {Client, Intents, Collection, Interaction} = require('discord.js');
 const {token} = require('../saramma/config.json');
 const fs = require("fs");
 
 const client = new Client({
-    intents: [Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES],
+    intents: [Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILDS],
     partials: ["CHANNEL"]
 });
 
@@ -23,5 +23,20 @@ for (const file of eventFiles) {
         client.on(event.name, (...args) => event.execute(...args));
     }
 }
+
+client.on('interactionCreate', async interaction => {
+    if (!interaction.isCommand()) return;
+        const command = client.commands.get(interaction.commandName);
+        if (!command) return;
+        try {
+            await command.execute(interaction);
+        } catch (error) {
+            if (error) console.error(error);
+            await interaction.reply({
+                content: 'There was an error while executing this command!',
+                ephemeral: true
+            });
+        }
+});
 
 client.login(token);
